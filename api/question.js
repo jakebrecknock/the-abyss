@@ -15,11 +15,23 @@ const schema = {
 };
 
 const DOMAINS = [
-  "world geography","history","science","biology","chemistry","physics","astronomy",
-  "sports","soccer","golf","basketball","baseball","motorsport","movies","television",
-  "music","literature","language","food","cooking","animals","plants","nature",
-  "technology","computing","video games","tabletop games","art","architecture",
-  "mythology","transportation","brands and products","fashion","culture","travel"
+  "geography",
+  "history",
+  "general science",
+  "sports",
+  "movies and television",
+  "music",
+  "books and literature",
+  "food and drink",
+  "animals and nature",
+  "technology",
+  "video games",
+  "tabletop games",
+  "art and architecture",
+  "mythology",
+  "transportation",
+  "brands and products",
+  "fashion and culture"
 ];
 
 function pick(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
@@ -37,23 +49,25 @@ export default async function handler(req,res){
 Generate ONE fresh open-ended trivia prompt.
 
 NON-NEGOTIABLE QUALITY RULES:
-- The QUESTION ITSELF must be accessible to a general trivia player. A player should immediately understand the category and be able to think of at least a few plausible answers without specialist education.
-- Do not ask for taxonomic ranks, obscure scientific classifications, specialist terminology, technical standards, academic subfields, or similarly niche categories even if they contain many valid answers.
-- Difficulty should come from HOW OBSCURE THE PLAYER'S ANSWER IS, not from understanding or accessing the category.
-- A good prompt has obvious 10-point answers that most adults could produce, while still allowing obscure 60/85/100-point answers.
-- Before accepting a prompt, silently identify at least THREE obvious/common answers. If you cannot do that easily, reject the prompt and generate another.
-- The prompt must have a LARGE legitimate answer universe. Aim for at least 40 valid answers; 75+ is better; hundreds or thousands are excellent.
-- Reject tiny closed lists. Never ask things equivalent to "name an NFL team", "name a planet", "name a moon of Jupiter", "name a Beatles member", or any prompt with only a handful of answers.
-- The prompt must be objectively judgeable and phrased so there is a clear criterion for validity.
-- Avoid traps, technical ambiguity, disputed definitions, and requirements that depend on a specific current date unless unavoidable.
-- Prefer prompts where both ordinary and deeply obscure correct answers exist, so the 10/30/60/85/100 rarity scale can breathe.
-- Keep topics varied: geography, science, history, sports, culture, entertainment, food, language, nature, technology, art, games, etc.
-- Do NOT give examples or reveal answers.
-- Do NOT recycle, paraphrase, narrow, broaden, or cosmetically rewrite any recent prompt.
-- Avoid using a category already used in this seven-question dive if a different category can work.
-- Keep the question concise, usually "Name a …" or another one-answer form.
-- breadth_note should briefly explain why the answer universe is broad WITHOUT revealing an answer.
-- Think through the candidate prompt and silently reject it if it likely has fewer than 40 defensible answers.
+- The question itself must be EASY TO UNDERSTAND and broadly accessible to a general trivia player.
+- Difficulty must come from choosing a rare answer, NOT from understanding an obscure category.
+- Most generated prompts should feel like something you could hear at a normal pub trivia night.
+- A normal adult should be able to think of at least 3 plausible answers within about 5 seconds.
+- Prefer familiar categories: countries, cities, animals, foods, movies, actors, musicians, sports, brands, historical figures, common science, games, books, vehicles, landmarks, etc.
+- Strongly avoid taxonomy, scientific family/genus/classification questions, obscure academic terminology, specialist technical categories, niche historical classifications, and other categories requiring specialized education.
+- Before accepting a prompt, silently identify 5 COMMON answers. If that is difficult, reject the prompt.
+- There must still be enough obscure correct answers for the 60/85/100 tiers.
+- Aim for at least 40 legitimate answers, but DO NOT sacrifice accessibility just to get a huge answer universe.
+- Prefer a simple 50-answer category over a difficult 500-answer category.
+- Do not give examples or reveal answers.
+
+REPETITION RULES:
+- Treat semantically similar prompts as repeats even if worded differently.
+- Do not reuse the same underlying answer pool from a recent prompt.
+- If a recent question asked about dog breeds, do not ask another dog-breed question.
+- If a recent question asked about countries with a property, avoid another closely related country-property prompt.
+- Avoid repeating the same subject family within at least the next 20 prompts.
+- Variety of underlying knowledge matters more than merely changing wording.
 
 Use this randomly selected domain as inspiration, not a requirement: ${domain}
 Random freshness nonce: ${nonce}`;
