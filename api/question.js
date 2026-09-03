@@ -37,6 +37,11 @@ export default async function handler(req,res){
 Generate ONE fresh open-ended trivia prompt.
 
 NON-NEGOTIABLE QUALITY RULES:
+- The QUESTION ITSELF must be accessible to a general trivia player. A player should immediately understand the category and be able to think of at least a few plausible answers without specialist education.
+- Do not ask for taxonomic ranks, obscure scientific classifications, specialist terminology, technical standards, academic subfields, or similarly niche categories even if they contain many valid answers.
+- Difficulty should come from HOW OBSCURE THE PLAYER'S ANSWER IS, not from understanding or accessing the category.
+- A good prompt has obvious 10-point answers that most adults could produce, while still allowing obscure 60/85/100-point answers.
+- Before accepting a prompt, silently identify at least THREE obvious/common answers. If you cannot do that easily, reject the prompt and generate another.
 - The prompt must have a LARGE legitimate answer universe. Aim for at least 40 valid answers; 75+ is better; hundreds or thousands are excellent.
 - Reject tiny closed lists. Never ask things equivalent to "name an NFL team", "name a planet", "name a moon of Jupiter", "name a Beatles member", or any prompt with only a handful of answers.
 - The prompt must be objectively judgeable and phrased so there is a clear criterion for validity.
