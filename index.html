@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#02131e">
+<title>The Abyss — Infinite Dive</title>
+<style>
+:root{
+  --bg:#010910;--deep:#02131e;--mid:#05344a;--surface:#08728d;--foam:#ebfdff;
+  --aqua:#75eced;--muted:#8fbac2;--line:rgba(200,245,248,.16);--bad:#ffd2cb;
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:var(--bg);color:var(--foam);
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+body{min-height:100vh;overflow-x:hidden}
+button,input{font:inherit}
+button{cursor:pointer}
+#ocean{
+  position:relative;min-height:100vh;overflow:hidden;padding:max(18px,env(safe-area-inset-top)) 18px max(18px,env(safe-area-inset-bottom));
+  background:
+    radial-gradient(ellipse at 50% -5%,rgba(184,249,255,.22),transparent 37%),
+    linear-gradient(180deg,var(--surface) 0%,var(--mid) 24%,var(--deep) 63%,#01070c 100%);
+}
+.ray{position:absolute;top:-120px;width:220px;height:520px;background:linear-gradient(180deg,rgba(220,255,255,.11),transparent);
+ transform:rotate(17deg);filter:blur(8px);pointer-events:none}.r1{left:4%}.r2{right:5%;transform:rotate(-17deg)}
+.bubble{position:absolute;border:1px solid rgba(220,255,255,.18);border-radius:50%;animation:rise 18s linear infinite;pointer-events:none}
+.b1{width:9px;height:9px;left:8%;bottom:-20px}.b2{width:16px;height:16px;left:29%;bottom:-30px;animation-delay:5s}
+.b3{width:7px;height:7px;right:12%;bottom:-20px;animation-delay:10s}.b4{width:12px;height:12px;right:35%;bottom:-25px;animation-delay:13s}
+@keyframes rise{to{transform:translateY(-115vh);opacity:0}}
+.shell{position:relative;z-index:2;max-width:1180px;margin:0 auto}
+.header{display:flex;justify-content:space-between;align-items:flex-start;gap:18px}
+.brand{display:flex;gap:12px;align-items:center}.ping{width:13px;height:13px;border-radius:50%;background:var(--aqua);
+ box-shadow:0 0 0 7px rgba(117,236,237,.08),0 0 28px rgba(117,236,237,.5)}
+.kicker{font-size:12px;font-weight:950;letter-spacing:.29em;text-transform:uppercase;color:#b9f9fa}
+.sub{font-size:14px;color:#a2c8ce;margin-top:5px}.depth{text-align:right}.depth small{display:block;font-size:10px;font-weight:850;
+ letter-spacing:.18em;text-transform:uppercase;color:#88b0b7}.depth strong{font-size:32px;font-weight:950}
+.grid{display:grid;grid-template-columns:minmax(0,1fr) 238px;gap:16px;margin-top:24px}
+.glass{background:rgba(0,13,21,.67);border:1px solid var(--line);backdrop-filter:blur(12px);border-radius:22px}
+.main{padding:26px}.side{padding:16px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.pill{display:inline-flex;align-items:center;gap:7px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);
+ border-radius:999px;padding:7px 12px;font-size:12px;font-weight:900;letter-spacing:.13em;text-transform:uppercase;color:#aaeff1}
+.clock{font-size:20px;font-weight:950;font-variant-numeric:tabular-nums}.track{height:8px;margin-top:12px;background:rgba(255,255,255,.08);
+ border-radius:99px;overflow:hidden}.fill{height:100%;width:100%;border-radius:inherit;background:linear-gradient(90deg,#50d9df,#c5ffff)}
+.question-area{min-height:290px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:32px 0}
+.sonar{font-size:42px;margin-bottom:14px}.question{max-width:760px;margin:0;font-size:clamp(29px,4vw,45px);line-height:1.08;font-weight:950}
+.meta{margin-top:14px;color:#93b8bf;font-size:14px;max-width:680px}
+.loading{display:none;align-items:center;justify-content:center;gap:10px;color:#a7dfe4}.loading.show{display:flex}
+.spinner{width:18px;height:18px;border-radius:50%;border:2px solid rgba(255,255,255,.14);border-top-color:var(--aqua);animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.form{max-width:760px;margin:0 auto;display:flex;gap:10px}.answer{flex:1;min-height:58px;border-radius:13px;padding:0 16px;
+ background:rgba(0,7,12,.8);border:1px solid rgba(199,244,247,.25);color:#fff}.answer::placeholder{color:#789ca3}
+.answer:focus{outline:2px solid rgba(117,236,237,.5);outline-offset:1px}.primary{min-height:58px;border:0;border-radius:13px;background:#83eaeb;
+ padding:0 28px;font-weight:950;color:#03202a}.primary:disabled,.answer:disabled{opacity:.55;cursor:not-allowed}
+.note{text-align:center;font-size:12px;color:#71979f;margin-top:9px}
+.feedback{display:none;max-width:760px;margin:15px auto 0;border:1px solid rgba(255,255,255,.1);background:rgba(0,0,0,.2);
+ border-radius:13px;padding:16px}.feedback.show{display:block}.feedback-head{display:flex;justify-content:space-between;gap:14px}
+.tier{font-size:11px;font-weight:950;letter-spacing:.15em;color:#8fdce0}.valid{display:block;margin-top:3px;font-weight:950;color:#a9f7eb;font-size:17px}
+.muted{color:#9abcc3;font-size:14px;margin-top:5px}.score{font-size:34px;font-weight:950}.examples{border-top:1px solid rgba(255,255,255,.1);padding-top:12px;margin-top:14px}
+.examples-title{font-size:11px;font-weight:950;letter-spacing:.14em;text-transform:uppercase;color:#82b8c0}.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:9px}
+.chip{border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);border-radius:999px;padding:6px 10px;font-size:13px}
+.next{display:none;max-width:760px;width:100%;min-height:49px;margin:14px auto 0;border:1px solid rgba(255,255,255,.15);border-radius:13px;
+ background:rgba(255,255,255,.05);color:#fff;font-weight:850}.next.show{display:block}
+.side-title{display:flex;justify-content:space-between;gap:10px}.side-title span{font-size:11px;font-weight:950;letter-spacing:.15em;text-transform:uppercase;color:#8eb8c0}
+.log{display:grid;gap:8px;margin-top:14px}.row{display:flex;justify-content:space-between;border:1px solid rgba(255,255,255,.05);
+ background:rgba(0,0,0,.1);border-radius:9px;padding:9px 10px;font-size:14px}.row span{color:#9abac1}.stats{margin-top:18px;padding-top:13px;border-top:1px solid rgba(255,255,255,.1)}
+.stat{display:flex;justify-content:space-between;margin-top:8px;font-size:14px}.stat:first-child{margin-top:0}.stat span{color:#89acb4}
+.secondary{width:100%;min-height:45px;margin-top:16px;border:1px solid rgba(255,255,255,.14);border-radius:12px;background:rgba(255,255,255,.05);color:white;font-weight:850}
+.finish{display:none;text-align:center;padding:30px;margin-top:16px}.finish.show{display:block}.finish .big{font-size:54px;font-weight:950}.rank{font-size:21px;font-weight:950;margin-top:14px}
+.error{display:none;max-width:850px;margin:20px auto;background:rgba(80,12,12,.25);border:1px solid rgba(255,170,160,.25);border-radius:14px;padding:16px;color:#ffd7d1}.error.show{display:block}
+@media(max-width:820px){#ocean{padding-left:13px;padding-right:13px}.grid{grid-template-columns:1fr}.main{padding:18px}.side{order:2}.form{flex-direction:column}
+ .primary{width:100%}.question-area{min-height:240px}.question{font-size:30px}.depth strong{font-size:26px}}
+@media(prefers-reduced-motion:reduce){.bubble{display:none}}
+</style>
+</head>
+<body>
+<div id="ocean">
+  <span class="ray r1"></span><span class="ray r2"></span>
+  <span class="bubble b1"></span><span class="bubble b2"></span><span class="bubble b3"></span><span class="bubble b4"></span>
+  <div class="shell">
+    <header class="header">
+      <div class="brand"><span class="ping"></span><div><div class="kicker">The Abyss</div><div id="stage" class="sub">Infinite Dive</div></div></div>
+      <div class="depth"><small>Depth</small><strong id="depth">0 m</strong></div>
+    </header>
+
+    <div id="error" class="error"></div>
+
+    <div class="grid">
+      <main class="glass main">
+        <div class="top"><span id="cat" class="pill">Sonar scanning…</span><span id="clock" class="clock">25.0</span></div>
+        <div class="track"><div id="timer" class="fill"></div></div>
+
+        <section class="question-area">
+          <div class="sonar">◉</div>
+          <h1 id="question" class="question">Descending into unexplored water…</h1>
+          <div id="meta" class="meta">Every question and answer is judged dynamically by AI.</div>
+          <div id="loading" class="loading"><span class="spinner"></span><span>Scanning for a fresh question…</span></div>
+        </section>
+
+        <form id="form" class="form">
+          <input id="answer" class="answer" autocomplete="off" spellcheck="false" placeholder="Enter an answer…" aria-label="Answer" disabled>
+          <button id="submit" class="primary" type="submit" disabled>DIVE</button>
+        </form>
+        <div class="note">Wrong answers resume with the time you had left. AI judging time never costs you seconds.</div>
+
+        <div id="feedback" class="feedback" aria-live="polite"></div>
+        <button id="next" class="next" type="button">Continue deeper ↓</button>
+      </main>
+
+      <aside class="glass side">
+        <div class="side-title"><span>Dive log</span><strong id="total">0 pts</strong></div>
+        <div id="log" class="log"></div>
+        <div class="stats">
+          <div class="stat"><span>Best dive</span><strong id="best">0</strong></div>
+          <div class="stat"><span>Dives</span><strong id="dives">0</strong></div>
+          <div class="stat"><span>Questions seen</span><strong id="seen">0</strong></div>
+        </div>
+        <button id="newDive" class="secondary" type="button">New dive</button>
+      </aside>
+    </div>
+
+    <section id="finish" class="glass finish">
+      <div class="kicker">Dive complete</div>
+      <div id="finalDepth" class="big">0 m</div>
+      <div id="finalScore" class="sub">0 / 700 points</div>
+      <div id="rank" class="rank"></div>
+      <button id="again" class="primary" style="margin-top:20px" type="button">Dive again</button>
+    </section>
+  </div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const E={stage:$('stage'),depth:$('depth'),cat:$('cat'),clock:$('clock'),timer:$('timer'),question:$('question'),meta:$('meta'),
+ loading:$('loading'),form:$('form'),answer:$('answer'),submit:$('submit'),feedback:$('feedback'),next:$('next'),total:$('total'),
+ log:$('log'),best:$('best'),dives:$('dives'),seen:$('seen'),newDive:$('newDive'),finish:$('finish'),finalDepth:$('finalDepth'),
+ finalScore:$('finalScore'),rank:$('rank'),error:$('error'),again:$('again')};
+
+let idx=0,total=0,scores=[],locked=false,tickId=null,remainingMs=25000,startedAt=0,current=null,diveNo=1;
+let best=Number(localStorage.getItem('abyss.best')||0);
+let dives=Number(localStorage.getItem('abyss.dives')||0);
+let history=JSON.parse(localStorage.getItem('abyss.history')||'[]');
+let sessionCategories=[];
+
+function esc(s){return String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]))}
+function showError(msg){E.error.textContent=msg;E.error.classList.add('show')}
+function clearError(){E.error.classList.remove('show')}
+function save(){localStorage.setItem('abyss.best',String(best));localStorage.setItem('abyss.dives',String(dives));localStorage.setItem('abyss.history',JSON.stringify(history.slice(-500)))}
+function renderLog(){E.log.innerHTML='';for(let i=0;i<7;i++){const r=document.createElement('div');r.className='row';r.innerHTML='<span>Q'+(i+1)+'</span><strong>'+(scores[i]===undefined?'—':scores[i]+' pts')+'</strong>';E.log.appendChild(r)}
+ E.total.textContent=total+' pts';E.depth.textContent=(total*10).toLocaleString()+' m';E.best.textContent=best;E.dives.textContent=dives;E.seen.textContent=history.length}
+function setBusy(on,text='Thinking…'){E.loading.classList.toggle('show',on);if(on)E.loading.lastElementChild.textContent=text;E.answer.disabled=on||locked;E.submit.disabled=on||locked}
+function stopClock(){clearInterval(tickId);tickId=null;if(startedAt){remainingMs=Math.max(0,remainingMs-(performance.now()-startedAt));startedAt=0}}
+function runClock(){clearInterval(tickId);startedAt=performance.now();const base=remainingMs;const tick=()=>{const elapsed=performance.now()-startedAt;const left=Math.max(0,base-elapsed);E.clock.textContent=(left/1000).toFixed(1);E.timer.style.width=(left/25000*100)+'%';if(left<=0){remainingMs=0;startedAt=0;clearInterval(tickId);tickId=null;timeout()}};tick();tickId=setInterval(tick,80)}
+function tier(score){return score===100?'ONE IN A MILLION':score===85?'DEEP CUT':score===60?'RARE':score===30?'COMMON':'SURFACE'}
+function examples(arr){if(!arr||!arr.length)return'';return '<div class="examples"><div class="examples-title">100-point examples</div><div class="chips">'+arr.slice(0,2).map(x=>'<span class="chip">'+esc(x)+'</span>').join('')+'</div></div>'}
+async function api(path,body){
+ const r=await fetch(path,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+ let data={}; try{data=await r.json()}catch{}
+ if(!r.ok) throw new Error(data.error||('Request failed ('+r.status+')'));
+ return data;
+}
+async function loadQuestion(){
+ clearError();locked=true;stopClock();remainingMs=25000;E.clock.textContent='25.0';E.timer.style.width='100%';
+ E.feedback.classList.remove('show');E.next.classList.remove('show');E.finish.classList.remove('show');
+ E.cat.textContent='SONAR SCANNING';E.question.textContent='Descending into unexplored water…';E.meta.textContent='Building a broad-answer question that you have not seen recently.';
+ setBusy(true,'Scanning for a fresh question…');
+ try{
+   const recent=history.slice(-120).map(x=>({question:x.question,category:x.category}));
+   current=await api('/api/question',{recent,avoidCategories:sessionCategories});
+   history.push({question:current.question,category:current.category,id:current.id||crypto.randomUUID(),at:Date.now()});
+   history=history.slice(-500);sessionCategories.push(current.category);save();
+   E.stage.textContent='Dive '+diveNo+' · Question '+(idx+1)+' of 7';E.cat.textContent=current.category;E.question.textContent=current.question;
+   E.meta.textContent='Broad answer universe · '+current.breadth_note;
+   locked=false;setBusy(false);renderLog();E.answer.value='';E.answer.focus();runClock();
+ }catch(err){setBusy(false);showError('Could not generate a question: '+err.message+'. Check the server/API setup, then press New dive.')}
+}
+async function submitAnswer(){
+ if(locked||!current)return;
+ const raw=E.answer.value.trim();if(!raw)return;
+ stopClock();locked=true;setBusy(true,'Judging your answer…');E.feedback.classList.remove('show');
+ try{
+   const result=await api('/api/judge',{mode:'answer',question:current.question,category:current.category,answer:raw});
+   if(!result.valid){
+     locked=false;setBusy(false);E.feedback.classList.add('show');
+     E.feedback.innerHTML='<strong style="color:var(--bad)">Not accepted.</strong><div class="muted">'+esc(result.feedback||'That does not fit the prompt.')+' — '+(remainingMs/1000).toFixed(1)+'s remain.</div>';
+     E.answer.value='';E.answer.focus();if(remainingMs>0)runClock();else timeout();return;
+   }
+   scores[idx]=result.score;total+=result.score;locked=true;setBusy(false);E.answer.disabled=true;E.submit.disabled=true;
+   E.feedback.classList.add('show');
+   E.feedback.innerHTML='<div class="feedback-head"><div><div class="tier">'+tier(result.score)+'</div><span class="valid">'+esc(raw)+'</span><div class="muted">'+
+      (result.canonical_answer && result.canonical_answer.toLowerCase()!==raw.toLowerCase()?'Interpreted as '+esc(result.canonical_answer)+'. ':'')+
+      esc(result.reason||'')+'</div></div><div class="score">'+result.score+'</div></div>'+examples(result.examples_100);
+   renderLog();if(idx<6)E.next.classList.add('show');else finishDive();
+ }catch(err){locked=false;setBusy(false);showError('Could not judge that answer: '+err.message+'. Your timer is still paused; submit again to retry.');E.answer.disabled=false;E.submit.disabled=false}
+}
+async function timeout(){
+ if(locked&&remainingMs>0)return;
+ locked=true;stopClock();setBusy(true,'Opening the dive log…');
+ try{
+   const result=await api('/api/judge',{mode:'timeout',question:current.question,category:current.category,answer:''});
+   scores[idx]=0;setBusy(false);E.answer.disabled=true;E.submit.disabled=true;E.feedback.classList.add('show');
+   E.feedback.innerHTML='<strong>Time expired — 0 points.</strong><div class="muted">The oxygen window closed.</div>'+examples(result.examples_100);
+   renderLog();if(idx<6)E.next.classList.add('show');else finishDive();
+ }catch(err){scores[idx]=0;setBusy(false);E.answer.disabled=true;E.submit.disabled=true;E.feedback.classList.add('show');E.feedback.innerHTML='<strong>Time expired — 0 points.</strong><div class="muted">Examples could not be loaded.</div>';renderLog();if(idx<6)E.next.classList.add('show');else finishDive()}
+}
+function finishDive(){dives++;best=Math.max(best,total);save();renderLog();E.finish.classList.add('show');E.finalDepth.textContent=(total*10).toLocaleString()+' m';E.finalScore.textContent=total+' / 700 points';E.rank.textContent=total>=575?'ABYSSAL':total>=450?'HADAL':total>=325?'DEEP SEA':total>=200?'TWILIGHT ZONE':'CONTINENTAL SHELF'}
+function freshDive(){clearError();stopClock();idx=0;total=0;scores=[];sessionCategories=[];diveNo=dives+1;renderLog();loadQuestion()}
+E.form.addEventListener('submit',e=>{e.preventDefault();submitAnswer()});
+E.next.addEventListener('click',()=>{if(idx<6){idx++;loadQuestion()}});
+E.newDive.addEventListener('click',freshDive);
+E.again.addEventListener('click',freshDive);
+renderLog();freshDive();
+</script>
+</body>
+</html>

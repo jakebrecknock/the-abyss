@@ -1,0 +1,16 @@
+{
+  "name": "the-abyss-infinite",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vercel dev",
+    "deploy": "vercel --prod"
+  },
+  "dependencies": {
+    "openai": "^5.20.0"
+  },
+  "devDependencies": {
+    "vercel": "^46.1.0"
+  }
+}
