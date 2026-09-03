@@ -74,7 +74,7 @@ export default async function handler(req,res){
     const response = await client.responses.create({
       model: process.env.OPENAI_MODEL || "gpt-5.6-luna",
       store: false,
-      reasoning: { effort: "medium" },
+      reasoning: { effort: "none" },
       instructions,
       input,
       text: {
